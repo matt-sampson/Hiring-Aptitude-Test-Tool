@@ -6,6 +6,8 @@
 
 The product will be a website that hosts a varying selection of games or challenges designed to test a person’s acuity. The nature of these challenges will be to ask the user a series of questions, such as math or logic, and record their answer and response time. This is designed to be a formal and streamlined way for users to demonstrate their capabilities as a part of the initial job interview or screening process. 
 
+The core product is the framework that allows for the basic concept of creating challenges, sending challenges to people through email, recording the results of the tests, and finally reporting the test results to the person who sent the test. The actual tests are fully customizable, questions may be of any topic and responses may be in the form of multiple choice, short answer, long response, or any other format; all of these tests are compatible with the core framework.
+
 #### Q2: Who are your target users?
 
 The target users are primarily recruiters or others in charge of the job screening process. Before investing time and money into a candidate, the first step is to assess their basic qualifications and abilities related to problem solving. They can quickly and easily design a test and send it to candidates for testing and review their results in detail. If a candidate passes, then more time and money may be invested into investigating if they are fit for the job or internship positions. Otherwise, the time investment for an unsuitable candidate can be minimized.
