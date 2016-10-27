@@ -1,0 +1,34 @@
+Planning Meeting Notes:
+The meeting was on Tuesday October 11 2016
+
+We discussed the specifics of our program:
+- This is a program that asks basic questions that could be mathematical or coding related
+- It will keep track of how long it takes the user to answer questions and has a leaderboard that keeps track of the best scores
+- Scoring can be based on the number of correct answers and time
+- This program will let users email quizzes to others in order to challenge them
+- The main target audience are job interviewers
+    - Job interviewers can send job applicants quizzes in order to weed out people who are incompetent
+    - This can save them, and the job applicant a lot of time
+
+As a first phase we plan to implement:
+- Simple multiplication questions
+- Score, timing, leaderboards
+
+Later on we can add features such as:
+- A GUI for users
+- More variety in questions
+- The ability to email others challenges
+
+For the first week we have laid out tasks for each member. There are 5 tasks and each member will be responsible for one:
+1. Write up the product.md
+2. Write up the iteration-01.plan.md
+3. Write up the iteration-01.review.md
+4. Implement random multiplication questions with java script
+5. Implement basic GUI
+
+We plan to communicate with eachother through Slack and/or Whatsapp.
+
+We will work together to come up with answers for the first 3 tasks and then have a specific person
+do the write up of it to hand in.
+
+We plan to have weekly meetings on Tuesday at 5PM since that is when everyone is free.
