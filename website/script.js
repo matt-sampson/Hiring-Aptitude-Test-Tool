@@ -1,7 +1,14 @@
+function contentQuestion() {
+	var $section = $("#content");
+	$section.empty();
+	var $h3 = $("<h3>").html("Question Types");
+	$section.append($h3);
+}
+
 //Question ID Global Counter
 var qid = 0;
 
-function createMultiplicationQuestion() {
+function createMultiplicationQuestion($container) {
 	qid++;
 	var $section = $("<section id='question" + qid + "'>");
 	var $title = $("<h3>").html("Question: " + qid);
@@ -20,7 +27,7 @@ function createMultiplicationQuestion() {
 	var $val4 = $("<span>").html(int1 * int2 - randInt(1, 99));
 	
 	$section.append($title, $question, $opt1, $val1, $opt2, $val2, $opt3, $val3, $opt4, $val4);
-	$("#content").append($section); //Name of container
+	$container.append($section); //Name of container
 }
 
 function randInt(min, max) {
