@@ -4,6 +4,22 @@ var fs = require("fs");
 var url = require("url");
 var express = require("express");
 var bodyParser = require("body-parser");
+var nodemailer = require("nodemailer");
+
+/*
+* Setup smtp to send emails.
+* Set config settings and setup transporter.
+*/
+var smtpConfig = {
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: "csc301.mailer@gmail.com",
+        pass: "csc301team10"
+	}
+};
+var transporter = nodemailer.createTransport(smtpConfig);
 
 /* 
 * Setup Express.
