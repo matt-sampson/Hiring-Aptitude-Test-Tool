@@ -1,0 +1,4 @@
+Planning meeting: Tuesday November 1st
+Our goal for this deliverable is to have the basic GUI down and be able to ask questions and answer them
+We also want to have the ability to create and email quizzes.
+We will have one person work on the front-end and two work on the back-end. The other two members are missing
