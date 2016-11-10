@@ -33,22 +33,22 @@ function createMultiplicationQuestion($container, number) {
 		var $question = $("<p>").html("Calculate: " + int1 + " * " + int2);
 		var $opt1 = $('<input type="radio" name=' + qid + ' />').prop( "checked", true);
 		int3 = int1 * int2;
-		$opt1.value = int3;
+		$opt1.val(int3);
 		var $val1 = $("<span>").html(int3);
 		
 		var $opt2 = $('<input type="radio" name=' + qid + ' />');
 		int3 = int1 * int2 + randInt(1, 99);
-		$opt2.value = int3;
+		$opt2.val(int3);
 		var $val2 = $("<span>").html(int3);
 		
 		var $opt3 = $('<input type="radio" name=' + qid + ' />');
 		int3 = int1 * int2 + randInt(1, 99);
-		$opt3.value = int3;
+		$opt3.val(int3);
 		var $val3 = $("<span>").html(int3);
 		
 		var $opt4 = $('<input type="radio" name=' + qid + ' />');
 		int3 = int1 * int2 - randInt(1, 99);
-		$opt4.value = int3;
+		$opt4.val(int3);
 		var $val4 = $("<span>").html(int3);
 		
 		$section.append($title, $question, $opt1, $val1, $opt2, $val2, $opt3, $val3, $opt4, $val4);
@@ -75,7 +75,7 @@ function checkAnswers($container){
 		//Find the checked radiobutton
 		for(var y = 0; y < $radioButtons.length; y++){
 			if($radioButtons[y].prop("checked")){
-				answer = $radioButtons[y].value;
+				answer = $radioButtons[y].val();
 			}
 		}
 		//Find the question
