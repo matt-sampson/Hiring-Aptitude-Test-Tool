@@ -109,3 +109,55 @@ function checkAnswer(question, answer){
 function randInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+function createQuestion() {
+	var $section = $("#content").empty();
+	var $h3 = $("<h3>").html("Question Types");
+	$section.append($h3);
+	
+	var $MC =  $("<button>").html("Multiple Choice");
+	$MC.appendTo($section);
+	$MC.click(function() {
+		$section.empty();
+		mcInit($section);
+	});
+}
+
+function mcInit($container) {
+	var $options = $("<table>").appendTo($container);
+	
+	var $quantity = $("<tr id='mc-quantity'>").appendTo($options);
+	$("<td>").html("Number of Questions: ").appendTo($quantity);
+	$("<input>").val(5).appendTo($("<td>").appendTo($quantity));
+	
+	var $ops = $("<tr id='mc-ops'>").appendTo($options);
+	$("<td>").html("Multiple Choice Options: ").appendTo($ops);
+	$("<input>").val(4).appendTo($("<td>").appendTo($ops));
+	
+	$("<button>").html("Start").appendTo($container).click(function() {
+		var q = ($("#mc-quantity").find("input")).val();
+		var o = ($("#mc-ops").find("input")).val();
+		$container.empty();
+		mcCreate($container, q, o);
+	});
+}
+
+function mcCreate($container, quantity, options) {
+	for (i = 0; i < quantity; i++) {
+		var $section = $("<section>").addClass("customQuestion").appendTo($container);
+		var $h4 = $("<h4>").html("Create Question " + (i + 1)).appendTo($section);
+		var $table = $("<table>").appendTo($section);
+		var $question = $("<tr>").addClass("qName").appendTo($table);
+		var $td = $("<td>").html("Question: ").appendTo($question);
+		var $input = $("<input>").appendTo($("<td>").appendTo($question));
+		for (j = 0; j < options; j++) {
+			mcOptionCreate($table);
+		}
+	}
+}
+
+function mcOptionCreate($table) {
+	var $tr = $("<tr>").appendTo($table);
+	var $td = $("<td>").html("Option: ").appendTo($tr);
+	var $input = $("<input>").appendTo($("<td>").appendTo($tr));
+}
