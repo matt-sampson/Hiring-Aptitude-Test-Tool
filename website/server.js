@@ -40,3 +40,8 @@ var server = app.listen(port, function () {
 app.get("/", function (req, res) {
 	res.sendFile(__dirname + '/main.html');
 });
+
+app.put("/questions", function (req, res) {
+	var quiz = req.body;
+	res.json({"result" : "success"});
+});

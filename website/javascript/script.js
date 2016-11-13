@@ -195,8 +195,51 @@ function jsonQuestions($container) {
 	for (i = 0; i < $questions.length; i++) {
 		var $curr = $questions.eq(i);
 		var text = $curr.find(".questionText").val();
-		data.questions.push({text});
+		var answer = $curr.find(".correctAnswer").val();
+		var options = [];
+		var wrong = $curr.find(".wrongAnswer");
+		for (j = 0; j < wrong.length; j++) {
+			options.push((wrong.eq(j)).val());
+		}
+		data.questions.push({text, answer, options});
 	}
+	prepareQuestions(data);
+}
+
+function prepareQuestions(data) {
+	var $section = $("#content").empty();
+	var $table = $("<table>").appendTo($section);
+	var $name = $("<tr>").appendTo($table);
+	$("<td>").html("Quiz Name: ").appendTo($name);
+	var $qn = $("<input>").appendTo($("<td>").appendTo($name));
+	var $results = $("<tr>").appendTo($table);
+	$("<td>").html("Send Results To Email: ").appendTo($results);
+	var $qe = $("<input>").appendTo($("<td>").appendTo($results));
 	
-	alert(JSON.stringify(data));
+	var $recipients = $("<section>").appendTo($section);
+	var $title = $("<h3>").html("Send Quiz To Recipients").appendTo($recipients);
+	var $add = $("<button>").html("Add Recipient").appendTo($recipients).click(function() {
+		$("<input>").attr("size", 80).addClass("recipient").appendTo($recipients);
+	});
+	var $submit = $("<button>").html("Finish and Send").appendTo($recipients).click(function() {
+		var name = $qn.val();
+		var creator = $qe.val();
+		var recipient = [];
+		var allRecipient = $recipients.find(".recipient");
+		for (i = 0; i < allRecipient.length; i++) {
+			recipient.push((allRecipient.eq(i)).val());
+		}
+		var json = {name, creator, recipient, data};
+		putNewQuestions(json);
+	});	
+}
+
+function putNewQuestions(json) {
+	$.ajax({
+		url: "\/questions",
+		method: "PUT",
+		data: json
+	}).done(function(jsondata) {
+		alert("Done");
+	});
 }

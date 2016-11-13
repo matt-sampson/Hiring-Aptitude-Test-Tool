@@ -20,4 +20,6 @@ a.header_nav_bar:hover {
     background-color: #339fff;
 }
 
-
+.recipient {
+	display: block;
+}
