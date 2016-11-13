@@ -6,6 +6,7 @@ function contentQuestion() {
 	var $section = $("#content").empty();
 	var $h3 = $("<h3>").html("Question Types");
 	$section.append($h3);
+	var score = 0;
 	
 	var $multiplcationMC =  $("<button>").html("Multiplication MC");
 	$multiplcationMC.appendTo($section);
@@ -16,7 +17,12 @@ function contentQuestion() {
 		createMultiplicationQuestion($section, 10);
 		var $mmcSubmit = $("<button>").html("Submit");
 		$mmcSubmit.appendTo($section);
+		//Attatch checkanswers function to submit button
+		$mmcSubmit.click(function() {
+			score = checkAnswers($section);
+		});
 	});
+	window.alert("You scored: " + score.toString());
 }
 
 //Question ID Global Counter
@@ -70,6 +76,7 @@ function checkAnswers($container){
 	var $p;
 	
 	var score = 0;
+	var totalScore = 0;
 	
 	//Go through every section in the container
 	for(var x = 0; x < $sections.length; x++){
@@ -86,9 +93,17 @@ function checkAnswers($container){
 		$p = $sect.find("p");
 		question = $p[0].text();
 		
-		score = score + checkAnswer(question, answer);
+		score = checkAnswer(question, answer);
+		//Set section to appropriate color for correct/incorrect
+		if(score == 1){
+			$sect.css("border", "2px solid green");
+		}
+		else{
+			$sect.css("border", "2px solid red");
+		}
+		totalScore = totalScore + score;
 	}
-	return score;
+	return totalScore;
 }
 
 function checkAnswer(question, answer){
