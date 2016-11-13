@@ -20,9 +20,9 @@ function contentQuestion() {
 		//Attatch checkanswers function to submit button
 		$mmcSubmit.click(function() {
 			score = checkAnswers($section);
+			window.alert("You scored: " + score.toString());
 		});
 	});
-	window.alert("You scored: " + score.toString());
 }
 
 //Question ID Global Counter
