@@ -6,7 +6,6 @@ function contentQuestion() {
 	var $section = $("#content").empty();
 	var $h3 = $("<h3>").html("Question Types");
 	$section.append($h3);
-	var score = 0;
 	
 	var $multiplcationMC =  $("<button>").html("Multiplication MC");
 	$multiplcationMC.appendTo($section);
@@ -19,6 +18,7 @@ function contentQuestion() {
 		$mmcSubmit.appendTo($section);
 		//Attatch checkanswers function to submit button
 		$mmcSubmit.click(function() {
+			var score = 0;
 			score = checkAnswers($section);
 			window.alert("You scored: " + score.toString());
 		});
