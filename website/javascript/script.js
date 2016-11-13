@@ -142,7 +142,8 @@ function mcInit($container) {
 		var q = ($("#mc-quantity").find("input")).val();
 		var o = ($("#mc-ops").find("input")).val();
 		$container.empty();
-		mcCreate($container, q, o);
+		var $create = $("<section id='questionForm'>").appendTo($container);
+		mcCreate($create, q, o - 1);
 	});
 }
 
@@ -153,15 +154,34 @@ function mcCreate($container, quantity, options) {
 		var $table = $("<table>").appendTo($section);
 		var $question = $("<tr>").addClass("qName").appendTo($table);
 		var $td = $("<td>").html("Question: ").appendTo($question);
-		var $input = $("<input>").appendTo($("<td>").appendTo($question));
+		var $input = $("<input>").addClass("questionText").attr("size", 80).appendTo($("<td>").appendTo($question));
+		var $correct = $("<tr>").appendTo($table);
+		$("<td>").html("Answer: ").appendTo($correct);
+		$("<input>").addClass("correctAnswer").attr("size", 80).appendTo($("<td>").appendTo($correct));
+		
 		for (j = 0; j < options; j++) {
 			mcOptionCreate($table);
 		}
 	}
+	$("<button>").html("Submit").appendTo($container).click(function() {
+		jsonQuestions($container);
+	});
 }
 
 function mcOptionCreate($table) {
 	var $tr = $("<tr>").appendTo($table);
 	var $td = $("<td>").html("Option: ").appendTo($tr);
-	var $input = $("<input>").appendTo($("<td>").appendTo($tr));
+	var $input = $("<input>").addClass("wrongAnswer").attr("size", 80).appendTo($("<td>").appendTo($tr));
+}
+
+function jsonQuestions($container) {
+	var data = {"questions": []};
+	var $questions = $container.find(".customQuestion");
+	for (i = 0; i < $questions.length; i++) {
+		var $curr = $questions.eq(i);
+		var text = $curr.find(".questionText").val();
+		data.questions.push({text});
+	}
+	
+	alert(JSON.stringify(data));
 }
