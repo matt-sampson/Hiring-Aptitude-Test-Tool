@@ -50,7 +50,27 @@ app.put("/questions", function (req, res) {
 			console.log(err);
 		}
 	});
-	res.json({"result" : "success"});
+	
+	var recipients = quiz.recipient;
+	for (var i = 0; i < recipients.length; i++) {
+		var msg = quiz.creator + " has challenged you to the quiz at " + "http://localhost:5000/start/" + quiz.name;
+		
+		var mailOptions = {
+			from: '"quiz" <csc301.mailer@gmail.com>', 
+			to: recipients[i], 
+			subject: quiz.name,
+			text: msg, 
+		};
+	
+		transporter.sendMail(mailOptions, function(error, info){
+			if(error){
+				res.status(400).end();
+			}
+			else {
+				res.status(200).send({});
+			}
+		});
+	}
 });
 
 app.get(/quiz/, function (req, res) {
@@ -67,4 +87,27 @@ app.get(/quiz/, function (req, res) {
 
 app.get(/start/, function (req, res) {
 	res.sendFile(__dirname + '/customquiz.html');
+});
+
+app.post("/send", function (req, res) {
+	var json = req.body;
+	//console.log(json);
+	var msg = json.address + " scored " + json.score + " out of " + json.total + " for quiz " + json.name;
+	//console.log(msg);
+	
+	var mailOptions = {
+		from: '"quiz" <csc301.mailer@gmail.com>', 
+		to: json.creator, 
+		subject: json.name + ' Results',
+		text: msg, 
+	};
+	
+	transporter.sendMail(mailOptions, function(error, info){
+		if(error){
+			res.status(400).end();
+		}
+		else {
+			res.status(200).send({});
+		}
+	});
 });
