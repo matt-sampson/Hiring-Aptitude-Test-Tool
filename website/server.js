@@ -5,6 +5,7 @@ var url = require("url");
 var express = require("express");
 var bodyParser = require("body-parser");
 var nodemailer = require("nodemailer");
+var jsonfile = require("jsonfile");
 
 /*
 * Setup smtp to send emails.
@@ -43,5 +44,27 @@ app.get("/", function (req, res) {
 
 app.put("/questions", function (req, res) {
 	var quiz = req.body;
+	var filename = __dirname + "/saves/" + quiz.name;
+	jsonfile.writeFile(filename, quiz, function(err) {
+		if (err) {
+			console.log(err);
+		}
+	});
 	res.json({"result" : "success"});
+});
+
+app.get(/quiz/, function (req, res) {
+	var name = (req.url).split("\/")[2];
+	var filename =  __dirname + "/saves/" + name;
+	jsonfile.readFile(filename, function (err, json) {
+		if (err)
+			console.log(err);
+		else {
+			res.json(json);
+		}
+	});
+});
+
+app.get(/start/, function (req, res) {
+	res.sendFile(__dirname + '/customquiz.html');
 });

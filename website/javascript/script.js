@@ -243,3 +243,49 @@ function putNewQuestions(json) {
 		alert("Done");
 	});
 }
+
+function startQuiz() {
+	var url = $(location).attr("href");
+	var split = url.split("\/");
+	var name = split[split.length - 1];
+	
+	$.ajax({
+		url: "\/quiz\/" + name,
+		method: "GET"
+	}).done(function(jsondata) {
+		$("#title").html("Quiz " + jsondata.name);
+		loadQuiz(jsondata);
+	});
+}
+
+function loadQuiz(json) {
+	var $container = $("#content").empty();
+	alert(JSON.stringify(json.data.questions));
+	var questions = json.data.questions;
+	for (let i = 0; i < questions.length; i++) {
+		var curr = questions[i];
+		var $section = $("<section>").appendTo($container);
+		$("<p>").html(curr.text).appendTo($section);
+		var $table = $("<table>").appendTo($section);
+		var $tr = $("<tr>").appendTo($table);
+		$("<input type='radio' name='" + curr.text + "'>").addClass("correctChoice").appendTo($("<td>").appendTo($tr));
+		$("<td>").html(curr.answer).appendTo($tr);
+		attachOptions(curr.options, $table, curr.text);
+	}
+	var $email = $("<section>").appendTo($container);
+	$("<span>").html("Enter Your Email").appendTo($email);
+	$("<br>").appendTo($email);
+	$("<input>").attr("size", 40).appendTo($email);
+	$("<br>").appendTo($email);
+	$("<button>").html("Submit Answers").appendTo($email).click(function() {
+		alert("submit");
+	});
+}
+
+function attachOptions(options, $table, inputName) {
+	for (let i = 0; i < options.length; i++) {
+		var $tr = $("<tr>").appendTo($table);
+		$("<input type='radio' name='" + inputName + "'>").appendTo($("<td>").appendTo($tr));
+		$("<td>").html(options[i]).appendTo($tr);
+	}
+}
