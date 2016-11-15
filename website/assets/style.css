@@ -1,5 +1,6 @@
 body {
     font-family: 'Roboto', sans-serif;
+	background: #FAFAFA;
 }
 
 nav {
@@ -13,7 +14,7 @@ a.header_nav_bar {
     display: inline-block;
     background-color: #53bbf4;
 	color: #ffffff;
-	margin-left: -4;
+	margin-left: -4px;
     text-align: center;
     padding: 14px 18px;
 	text-decoration: none;
@@ -32,6 +33,27 @@ a.header_nav_bar:hover {
 	display: block;
 }
 
+input {
+	border: 1px solid #53bbf4;
+	margin-bottom: 2px;
+	-webkit-transition: all 0.30s ease-in-out;
+}
+
+/*BUTTONS*/
+button {
+	color: #fff;
+	background-color: #2DAAED;
+	text-shadow: -1px 1px #417cb8;
+	padding: 10px 10px;
+	border: none;
+	margin: 5px 5px 5px 5px;
+}
+
+button:hover {
+	background-color: #0A95DF;
+	text-shadow: -1px 1px #27496d;
+}
+
 /* LEADERBOARD */
 table#leaderboard {
 	width: 100%;
@@ -39,7 +61,7 @@ table#leaderboard {
 	border-spacing: 0;
 }
 
-table#leaderboard th, td {
+table#leaderboard th, table#leaderboard td {
 	border: 1px solid black;
 	padding: 5px;
 	transition: all 0.15s;
