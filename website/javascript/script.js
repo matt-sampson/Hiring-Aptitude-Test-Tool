@@ -1,7 +1,3 @@
-function loadHeader() {
-	$('#header').load('common.html');
-}
-
 function contentQuestion() {
 	var $section = $("#content").empty();
 	var $h3 = $("<h3>").html("Question Types");
