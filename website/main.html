@@ -4,8 +4,11 @@
 		<meta charset="utf-8">
 		<title>CSC301 Project</title>
         <link rel="stylesheet" type="text/css" href="assets/style.css">
-		<script type="text/javascript" src="/javascript/jquery-2.2.4.min.js" defer></script>
-        <script type="text/javascript" src="/javascript/script.js" defer ></script>
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+		<script type="text/javascript" src="javascript/jquery-2.2.4.min.js" defer></script>
+        <script type="text/javascript" src="javascript/script.js" defer ></script>
+		<script type="text/javascript" src="javascript/webControl.js" defer ></script>
+		<script type="text/javascript" src="javascript/leaderboardScript.js" defer ></script>
 		
         
     </head>
@@ -14,13 +17,15 @@
             <div id="header_nav">
                 <h1>CSC301 Project</h1>
                 <nav>
+					<a href="main.html" class="header_nav_bar">Main</a>
                     <a class="header_nav_bar"><span onclick="contentQuestion()">Generate Questions</span></a>
                     <a class="header_nav_bar"><span onclick="createQuestion()">Create Custom Questions</span></a>
-                    <a href="placeholder.html" class="header_nav_bar">Placeholder</a>
-                    <a href="placeholder.html" class="header_nav_bar">Placeholder</a>
+                    <a class="header_nav_bar"><span onclick="addButtons()">Leaderboards</span></a>
                 </nav>
             </div>
         </header>
-		<section id="content"></section>
+		<section id="content">
+			<p>Click 'Generate Questions', 'Create Custom Questions', or 'Leaderboards' to test current functionality</p>
+		</section>
     </body>
 </html>
