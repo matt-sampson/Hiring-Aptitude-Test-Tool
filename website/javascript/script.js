@@ -1,7 +1,3 @@
-function loadHeader() {
-	$('#header').load('common.html');
-}
-
 function contentQuestion() {
 	var $section = $("#content").empty();
 	var $h3 = $("<h3>").html("Question Types");
@@ -195,8 +191,120 @@ function jsonQuestions($container) {
 	for (i = 0; i < $questions.length; i++) {
 		var $curr = $questions.eq(i);
 		var text = $curr.find(".questionText").val();
-		data.questions.push({text});
+		var answer = $curr.find(".correctAnswer").val();
+		var options = [];
+		var wrong = $curr.find(".wrongAnswer");
+		for (j = 0; j < wrong.length; j++) {
+			options.push((wrong.eq(j)).val());
+		}
+		data.questions.push({text, answer, options});
+	}
+	prepareQuestions(data);
+}
+
+function prepareQuestions(data) {
+	var $section = $("#content").empty();
+	var $table = $("<table>").appendTo($section);
+	var $name = $("<tr>").appendTo($table);
+	$("<td>").html("Quiz Name: ").appendTo($name);
+	var $qn = $("<input>").appendTo($("<td>").appendTo($name));
+	var $results = $("<tr>").appendTo($table);
+	$("<td>").html("Send Results To Email: ").appendTo($results);
+	var $qe = $("<input>").appendTo($("<td>").appendTo($results));
+	
+	var $recipients = $("<section>").appendTo($section);
+	var $title = $("<h3>").html("Send Quiz To Recipients").appendTo($recipients);
+	var $add = $("<button>").html("Add Recipient").appendTo($recipients).click(function() {
+		$("<input>").attr("size", 80).addClass("recipient").appendTo($recipients);
+	});
+	var $submit = $("<button>").html("Finish and Send").appendTo($recipients).click(function() {
+		var name = $qn.val();
+		var creator = $qe.val();
+		var recipient = [];
+		var allRecipient = $recipients.find(".recipient");
+		for (i = 0; i < allRecipient.length; i++) {
+			recipient.push((allRecipient.eq(i)).val());
+		}
+		var json = {name, creator, recipient, data};
+		putNewQuestions(json);
+	});	
+}
+
+function putNewQuestions(json) {
+	$.ajax({
+		url: "\/questions",
+		method: "PUT",
+		data: json
+	}).done(function(jsondata) {
+		alert("Done");
+	});
+}
+
+function startQuiz() {
+	var url = $(location).attr("href");
+	var split = url.split("\/");
+	var name = split[split.length - 1];
+	
+	$.ajax({
+		url: "\/quiz\/" + name,
+		method: "GET"
+	}).done(function(jsondata) {
+		$("#title").html("Quiz " + jsondata.name);
+		loadQuiz(jsondata);
+	});
+}
+
+function loadQuiz(json) {
+	var $container = $("#content").empty();
+	//alert(JSON.stringify(json));
+	var questions = json.data.questions;
+	for (let i = 0; i < questions.length; i++) {
+		var curr = questions[i];
+		var $section = $("<section>").addClass("questionSection").appendTo($container);
+		$("<p>").html(curr.text).appendTo($section);
+		var $table = $("<table>").appendTo($section);
+		var $tr = $("<tr>").appendTo($table);
+		$("<input type='radio' name='" + curr.text + "'>").addClass("correctChoice").appendTo($("<td>").appendTo($tr));
+		$("<td>").html(curr.answer).appendTo($tr);
+		attachOptions(curr.options, $table, curr.text);
+	}
+	var $email = $("<section>").appendTo($container);
+	$("<span>").html("Enter Your Email").appendTo($email);
+	$("<br>").appendTo($email);
+	var $address = $("<input>").attr("size", 40).appendTo($email);
+	$("<br>").appendTo($email);
+	$("<button>").html("Submit Answers").appendTo($email).click(function() {
+		scoreCustomQuiz($container, $address.val(), json.creator, json.name);
+	});
+}
+
+function attachOptions(options, $table, inputName) {
+	for (let i = 0; i < options.length; i++) {
+		var $tr = $("<tr>").appendTo($table);
+		$("<input type='radio' name='" + inputName + "'>").appendTo($("<td>").appendTo($tr));
+		$("<td>").html(options[i]).appendTo($tr);
+	}
+}
+
+function scoreCustomQuiz($container, address, creator, name) {
+	var $questions = $container.find(".questionSection");
+	var score = 0;
+	for (let i = 0; i < $questions.length; i++) {
+		var $curr = $questions.eq(i);
+		var $correct = $curr.find(".correctChoice");
+		if ($correct.is(":checked")) {
+			score++;
+		}
 	}
 	
-	alert(JSON.stringify(data));
+	var obj = {creator, address, name, score, "total" : $questions.length};
+	
+	$.ajax({
+		url: "\/send",
+		method: "POST",
+		data: obj
+	}).done(function() {
+		alert("Done");
+	});
+
 }
