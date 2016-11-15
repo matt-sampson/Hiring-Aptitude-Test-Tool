@@ -31,3 +31,31 @@ a.header_nav_bar:hover {
 .blockContent {
 	display: block;
 }
+
+/* LEADERBOARD */
+table#leaderboard {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+table#leaderboard th, td {
+	border: 1px solid black;
+	padding: 5px;
+	transition: all 0.15s;
+	text-align: left;
+}
+
+table#leaderboard th {
+	font-weight: bold;
+	background: #3fb4f3;
+}
+
+table#leaderboard tr:nth-child(even) td {
+	background: #cfecfc;
+}
+
+table#leaderboard tr td:hover {
+	background: #87d0f7;
+}
+
