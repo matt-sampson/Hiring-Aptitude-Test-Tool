@@ -1,9 +1,9 @@
 # Acuity Challenge
 
-## Iteration 01
+## Iteration 02
 
- * Start date: October 11, 2016
- * End date: October 25, 2016
+ * Start date: October 27, 2016
+ * End date: November 16, 2016
 
 ## Process
 
@@ -31,7 +31,8 @@ Please describe the artifacts that you will produce in order to organize and kee
 
 We do not have many artifacts to do this other than simple meeting notes to describe what needs to be done. The meeting
 notes are kept on a googledrive which team members have access to since the link is posted on slack. They will be uploaded
-to git later for the deliverable.
+to git later for the deliverable. We also hack mockup sketches for our application 
+https://github.com/csc301-fall-2016/project-team-10/tree/master/mockups
 
 ## Product
 
@@ -40,8 +41,6 @@ Goals and tasks:
  * Implement the GUI of our webapp
  * Using JavaScript create quizzes of multiple choice questions
  * Have the ability to email links to quizzes to others
-
-Artifacts
 
 For this iteration, we plan to build a webapp that is capable of generating multiple choice multiplication questions.
 Users should be able to select answers to questions and check if their answer is correct. We will also implement
