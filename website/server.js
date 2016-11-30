@@ -36,6 +36,19 @@ app.use(express.static(__dirname));
 var port = process.env.PORT || 5000;
 var server = app.listen(port, function () {
 	console.log("Listening: " + server.address().port);
+	//Write new json file for names of json files for leaderboards for quizzes
+	//if it does not exist
+	var lbFile = __dirname + "/leaderboard/quizNames.json";
+	jsonfile.readFile(lbFile, function(err, json){
+		if(err){
+			var obj = {"paths" : ""};
+			jsonfile.writeFile(lbFile, obj, function(err){
+				if(err){
+					console.log(err);
+				}
+			});
+		}
+	});
 });
 
 app.get("/", function (req, res) {
@@ -60,6 +73,21 @@ app.put("/questions", function (req, res) {
 			    console.log(err);
 		    }
 	        });
+			//Update the file containing the paths
+			pathsFile = __dirname + "/leaderboard/quizNames.json";
+			jsonfile.readFile(pathsFile, function(err, obj2){
+				if(err){
+					console.log(err);
+				}
+				else{
+					obj2["paths"] = obj2["paths"] + "," + quiz.name;
+					jsonfile.writeFile(pathsFile, obj2, function(err){
+						if(err){
+							console.log(err);
+						}
+					});
+				}
+			});
 		}
 	});
 	
@@ -171,6 +199,30 @@ app.post("/send", function (req, res) {
 		}
 		else {
 			res.status(200).send({});
+		}
+	});
+});
+
+app.get(/leaderboard/, function (req, res) {
+	var filename =  __dirname + "/leaderboard/quizNames.json";
+	jsonfile.readFile(filename, function (err, json) {
+		if (err)
+			console.log(err);
+		else {
+			res.json(json);
+		}
+	});
+});
+
+app.post(/singleLeaderboard/, function (req, res) {
+	console.log("here");
+	console.log(req.body);
+	var filename =  __dirname + "/leaderboard/" + req.body[1];
+	jsonfile.readFile(filename, function (err, json) {
+		if (err)
+			console.log(err);
+		else {
+			res.json(json);
 		}
 	});
 });
