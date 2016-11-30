@@ -4,22 +4,21 @@ function addButtons() {
 		method: "GET"
 	}).done(function(jsondata) {
 		var $section = $("#content").empty();
-	    var $desc = $("<h1>").html("Get leaderboard rankings for:");
+	        var $desc = $("<h1>").html("Get leaderboard rankings for:");
 		var $button;
 		$desc.appendTo($section);
 		var tokens = jsondata["paths"].split(',');
 		for(x = 1; x < tokens.length; x++){
-			console.log(tokens[x]);
 			var $button =  $("<button>").html(tokens[x]);
 			$button.name = tokens[x];
-			//$button.onclick = showLeaderBoard(tokens[x]);
+			$button.attr('id', tokens[x]);
 			$button.appendTo($section);
-			$button.click(function(){showLeaderBoard($button.name)});
+			$button.click(function(e){ showLeaderBoard($(this).attr('id'))});
 		}
 	});
 }
 
-function showLeaderBoard(name){
+function showLeaderBoard(fileName){
 	var $section = $("#content").empty();
 	var $desc = $("<h1>").html("Rankings: ");
 	$desc.appendTo($section);
@@ -27,7 +26,7 @@ function showLeaderBoard(name){
 	$.ajax({
 		url: "\/singleLeaderboard\/",
 		method: "POST",
-	    data: {1:name}
+	    data: {1:fileName}
 	}).done(function(jsondata) {
 		for(x = 1; x < 4; x++){
 			$desc2 = $("<h1>").html(jsondata[x]);
