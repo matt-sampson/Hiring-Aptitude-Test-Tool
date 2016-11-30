@@ -50,6 +50,19 @@ app.put("/questions", function (req, res) {
 			console.log(err);
 		}
 	});
+	//Create leaderboard file if it does not exist
+	var lbFile = __dirname + "/leaderboard/" + quiz.name;
+	jsonfile.readFile(lbFile, function (err, json) {
+		if (err){
+			var obj = {1:"NULL", 2:"NULL", 3:"NULL"};
+	        jsonfile.writeFile(lbFile, obj, function(err) {
+		    if (err) {
+			    console.log(err);
+		    }
+	        });
+		}
+	});
+	
 	
 	var recipients = quiz.recipient;
 	for (var i = 0; i < recipients.length; i++) {
@@ -65,9 +78,6 @@ app.put("/questions", function (req, res) {
 		transporter.sendMail(mailOptions, function(error, info){
 			if(error){
 				res.status(400).end();
-			}
-			else {
-				res.status(200).send({});
 			}
 		});
 	}
@@ -94,6 +104,59 @@ app.post("/send", function (req, res) {
 	//console.log(json);
 	var msg = json.address + " scored " + json.score + " out of " + json.total + " for quiz " + json.name;
 	//console.log(msg);
+	
+	//Update leaderboard if needed
+	var obj1;
+	var lbDir = __dirname + "/leaderboard/" + json.name;
+	jsonfile.readFile(lbDir, function(err, obj){
+		if (err) {
+			console.log(err);
+		}
+		//No error, write
+		else{
+			var nameScore;
+			var tokens;
+			var isNull = 0;
+			var holder;
+			var toAdd;
+			for(x = 1; x < 4; x++){
+				nameScore = obj[x];
+				tokens = nameScore.split(" ");
+				if(tokens.length < 2){
+					isNull = 1;
+					break;
+				}
+				else if(tokens[1] < json.score){
+					break;
+				}
+			}
+			//This score is lower, do nothing
+			if(x == 4){
+				return;
+			}
+			//Null means that this entry of the scoreboard has nothing so we just add it
+			if(isNull == 1){
+				obj[x] = json.address + " " + json.score;
+			}
+			//Bubble everything else down otherwise
+			else{
+				toAdd = json.address + " " + json.score;
+				while(x < 4){
+					holder = obj[x];
+					obj[x] = toAdd;
+					toAdd = holder;
+					x++;
+				}
+				
+			}
+			jsonfile.writeFile(lbDir, obj, function(err) {
+		        if (err) {
+			        console.log(err);
+		        }
+	        });
+		}
+	});
+	
 	
 	var mailOptions = {
 		from: '"quiz" <csc301.mailer@gmail.com>', 
