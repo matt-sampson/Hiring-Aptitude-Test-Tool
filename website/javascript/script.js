@@ -22,44 +22,82 @@ function contentQuestion() {
 }
 
 //Question ID Global Counter
-var qid = 0;
+//var qid = 0;
 
 function createMultiplicationQuestion($container, number) {
+	var qid = 0;
 	for (i = 0; i < number; i++) {
 		qid++;
 		var $section = $("<section id='question" + qid + "'>");
 		$section.css("border-bottom", "2px solid black");
 		var $title = $("<h3>").html("Question: " + qid);
 		
-		var int1 = randInt(1, 99);
-		var int2 = randInt(1, 99);
+		var int1 = randInt(0, 9);
+		var int2 = randInt(0, 9);
 		var int3 = 0; //Stores value being added to radiobutton and span
 		
-		
+		var answers = []; // keep track of answers generated to make sure same answer doesn't appear twice
 		var $question = $("<p>").html("Calculate: " + int1 + " * " + int2);
-		var $opt1 = $('<input type="radio" name=' + qid + ' />').prop( "checked", true);
+		var $opt1 = $('<input type="radio" name=' + qid + ' />')
 		int3 = int1 * int2;
+		answers.push(int3);
 		$opt1.val(int3);
 		var $val1 = $("<span>").html(int3);
 		
 		var $opt2 = $('<input type="radio" name=' + qid + ' />');
-		int3 = int1 * int2 + randInt(1, 99);
+		int3 = generateRandomAnswer(int1, int2, answers);
+		answers.push(int3);
 		$opt2.val(int3);
 		var $val2 = $("<span>").html(int3);
 		
 		var $opt3 = $('<input type="radio" name=' + qid + ' />');
-		int3 = int1 * int2 + randInt(1, 99);
+		int3 = generateRandomAnswer(int1, int2, answers);
+		answers.push(int3);
 		$opt3.val(int3);
 		var $val3 = $("<span>").html(int3);
 		
 		var $opt4 = $('<input type="radio" name=' + qid + ' />');
-		int3 = int1 * int2 - randInt(1, 99);
+		int3 = generateRandomAnswer(int1, int2, answers);
+		answers.push(int3);
 		$opt4.val(int3);
 		var $val4 = $("<span>").html(int3);
 		
-		$section.append($title, $question, $opt1, $val1, $opt2, $val2, $opt3, $val3, $opt4, $val4);
+		$section.append($title, $question)
+		var numbers = [1, 2, 3, 4]; // make array to keep track of opt & vals that have been appended
+
+		for (j = 0; j < 4; j++) {
+			var random = [Math.floor(Math.random() * numbers.length)];
+			while (numbers[random] == -1) {
+				random = [Math.floor(Math.random() * numbers.length)];
+			}
+
+			if (random == 0) {
+				$section.append($opt1, $val1, "<br>");
+			}
+			else if (random == 1) {
+				$section.append($opt2, $val2, "<br>");
+			}
+			else if (random == 2) {
+				$section.append($opt3, $val3, "<br>");
+			}
+			else if (random == 3) {
+				$section.append($opt4, $val4, "<br>");
+			}
+
+			numbers[random] = -1;
+		}
+		
 		$container.append($section); //Name of container
 	}
+}
+
+// generate a random (wrong) answer for use in the multiple choice quiz
+function generateRandomAnswer(int1, int2, answers) {
+	var answer = int1 * int2 + randInt(1, 9);
+	while (answers.indexOf(answer) >= 0) {
+		answer = int1 * int2 + randInt(1, 9);
+	}
+	return answer;
 }
 
 function checkAnswers($container){

@@ -19,10 +19,12 @@ a.header_nav_bar {
     padding: 14px 18px;
 	text-decoration: none;
 	border-right: 1px solid #ddd;
+	width: 12%;
 }
 
 a.header_nav_bar:hover {
     background-color: #339fff;
+    cursor: pointer;
 }
 
 .recipient {
@@ -79,5 +81,10 @@ table#leaderboard tr:nth-child(even) td {
 
 table#leaderboard tr td:hover {
 	background: #87d0f7;
+}
+
+/*MISC*/
+section {
+	padding-bottom: 15px;
 }
 
