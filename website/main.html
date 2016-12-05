@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
 		<meta charset="utf-8">
-		<title>CSC301 Project</title>
+		<title>Acuity Tester</title>
         <link rel="stylesheet" type="text/css" href="assets/style.css">
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 		<script type="text/javascript" src="javascript/jquery-2.2.4.min.js" defer></script>
@@ -15,17 +15,22 @@
     <body>
         <header id="head">
             <div id="header_nav">
-                <h1>CSC301 Project</h1>
+                <h1>Acuity Tester</h1>
                 <nav>
 					<a href="main.html" class="header_nav_bar">Main</a>
                     <a class="header_nav_bar"><span onclick="contentQuestion()">Generate Questions</span></a>
                     <a class="header_nav_bar"><span onclick="createQuestion()">Create Custom Questions</span></a>
-                    <a class="header_nav_bar"><span onclick="addButtons()">Leaderboards</span></a>
+                    <a class="header_nav_bar"><span onclick="addButtons()">Top Scorers</span></a>
                 </nav>
             </div>
         </header>
 		<section id="content">
-			<p>Click 'Generate Questions', 'Create Custom Questions', or 'Leaderboards' to test current functionality</p>
+			<div id="description">
+                <p>Acuity Tester is a website designed to help</p>
+            </div>
+
+            <div id="rankings">
+            </div>
 		</section>
     </body>
 </html>

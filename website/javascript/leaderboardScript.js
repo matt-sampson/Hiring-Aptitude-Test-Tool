@@ -22,15 +22,25 @@ function showLeaderBoard(fileName){
 	var $section = $("#content").empty();
 	var $desc = $("<h1>").html("Rankings: ");
 	$desc.appendTo($section);
+	var leaderboard = $('<table id="leaderboard"></table>');
+	var header = $('<tr><th>Rank</th><th>Name</th><th>Score</th></tr>');
+	leaderboard.append(header);
 	var $desc2;
 	$.ajax({
 		url: "\/singleLeaderboard\/",
 		method: "POST",
 	    data: {1:fileName}
 	}).done(function(jsondata) {
-		for(x = 1; x < 4; x++){
-			$desc2 = $("<h1>").html(jsondata[x]);
-			$desc2.appendTo($section);
+		for (x = 1; x < 4; x++) {
+			if (jsondata[x].split(' ')[0] != 'NULL') {
+				var row = $('<tr><td>' + x + '</td><td>' + jsondata[x].split(' ')[0] + '</td><td>' + jsondata[x].split(' ')[1] + '</td></tr>');
+			}
+			else {
+				var row = $('<tr><td>' + x + '</td><td>' + 'None' + '</td><td>' + '0' + '</td></tr>');
+			}
+			leaderboard.append(row);
 		}
 	});
+	
+	$("#content").append(leaderboard);
 }
