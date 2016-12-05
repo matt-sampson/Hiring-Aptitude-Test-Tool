@@ -25,6 +25,7 @@ function contentQuestion() {
 //var qid = 0;
 
 function createMultiplicationQuestion($container, number) {
+	var $container = $("#content").empty();
 	var qid = 0;
 	for (i = 0; i < number; i++) {
 		qid++;
@@ -62,7 +63,8 @@ function createMultiplicationQuestion($container, number) {
 		$opt4.val(int3);
 		var $val4 = $("<span>").html(int3);
 		
-		$section.append($title, $question)
+		$section.append($title, $question).appendTo("#content");
+		
 		var numbers = [1, 2, 3, 4]; // make array to keep track of opt & vals that have been appended
 
 		for (j = 0; j < 4; j++) {
@@ -114,18 +116,18 @@ function checkAnswers($container){
 	
 	//Go through every section in the container
 	for(var x = 0; x < $sections.length; x++){
-		$sect = $sections[x];
+		$sect = $sections.eq(x);
 		//jquery of radiobuttons for a specific section
-		$radioButtons = $sect.find("radio");
+		$radioButtons = $sect.find("input");
 		//Find the checked radiobutton
 		for(var y = 0; y < $radioButtons.length; y++){
-			if($radioButtons[y].prop("checked")){
-				answer = $radioButtons[y].val();
+			if($radioButtons.eq(y).prop("checked")){
+				answer = $radioButtons.eq(y).val();
 			}
 		}
 		//Find the question
 		$p = $sect.find("p");
-		question = $p[0].text();
+		question = $p.eq(0).text();
 		
 		score = checkAnswer(question, answer);
 		//Set section to appropriate color for correct/incorrect

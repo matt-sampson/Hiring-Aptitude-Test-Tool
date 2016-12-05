@@ -1,6 +1,6 @@
 body {
     font-family: 'Roboto', sans-serif;
-	background: #FAFAFA;
+	background: #C0E6FB;
 }
 
 nav {
@@ -95,5 +95,6 @@ div#description {
 	margin: auto;
 	width: 60%;
 	display: table;
+	background-color: #A1DAF9;
 }
 
