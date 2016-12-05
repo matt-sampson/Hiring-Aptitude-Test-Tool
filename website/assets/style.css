@@ -50,6 +50,7 @@ button {
 	padding: 10px 10px;
 	border: none;
 	margin: 5px 5px 5px 5px;
+	width: 150px;
 }
 
 button:hover {
@@ -96,5 +97,10 @@ div#description {
 	width: 60%;
 	display: table;
 	background-color: #A1DAF9;
+	font-size: 21px;
+}
+
+p#desc {
+	margin: 20px;
 }
 
