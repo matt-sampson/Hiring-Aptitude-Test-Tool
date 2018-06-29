@@ -17,7 +17,7 @@ var smtpConfig = {
     secure: true,
     auth: {
         user: "csc301.mailer@gmail.com",
-        pass: "csc301team10"
+        pass: "" #removed, don't hack this dead account!
 	}
 };
 var transporter = nodemailer.createTransport(smtpConfig);
